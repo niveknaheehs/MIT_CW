@@ -25,5 +25,6 @@ test:
         background: true
         parallel: true
       - circle-android wait-for-boot
-
-
+    override:
+        - (./gradlew assemble):
+            timeout: 360
