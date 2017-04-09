@@ -9,6 +9,7 @@ general:
 machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
+        QEMU_AUDIO_DRV: none
 
 dependencies:
     pre:
@@ -19,15 +20,10 @@ dependencies:
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
 test:
-  pre:
-    - emulator -avd circleci-android24 -no-window:
+    pre:
+      - emulator -avd circleci-android24 -no-window:
         background: true
         parallel: true
-    - circle-android wait-for-boot
-    override:
-        - (./gradlew assemble):
-            timeout: 360
-    post:
-        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-        - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+      - circle-android wait-for-boot
+
 
